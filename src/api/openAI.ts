@@ -1,9 +1,9 @@
 import { Configuration, OpenAIApi } from "openai";
 
-const configuranion = new Configuration({
-  apiKey: "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",
+const configuration = new Configuration({
+  apiKey: import.meta.env.VITE_SECRET_KEY,
 });
 
-const openAI = new OpenAIApi(configuranion);
+const openAI = new OpenAIApi(configuration);
 
 export default openAI;
