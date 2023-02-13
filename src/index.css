@@ -2,14 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: Comfortaa;
+  font-weight: 400;
+  src: url(assets/fonts/Comfortaa-Regular.ttf);
+}
+@font-face {
+  font-family: Comfortaa;
+  font-weight: 500;
+  src: url(assets/fonts/Comfortaa-Medium.ttf);
+}
+@font-face {
+  font-family: Comfortaa;
+  font-weight: 300;
+  src: url(assets/fonts/Comfortaa-Light.ttf);
+}
+@font-face {
+  font-family: Comfortaa;
+  font-weight: 600;
+  src: url(assets/fonts/Comfortaa-SemiBold.ttf);
+}
+@font-face {
+  font-family: Comfortaa;
+  font-weight: 700;
+  src: url(assets/fonts/Comfortaa-Bold.ttf);
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Comfortaa", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  /*color: rgba(255, 255, 255, 0.87);*/
-  background-color: #242424;
+  background-color: #181819;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

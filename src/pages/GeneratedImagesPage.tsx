@@ -22,15 +22,19 @@ export const GeneratedImagesPage = () => {
     );
   else {
     return (
-      <div className="">
+      <div className="flex flex-col items-center">
         <h2 className="text-3xl mb-3">
           Результаты по запросу: {urlArrayAndQuery.query}
         </h2>
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-2 max-w-[800px] justify-center xl:max-w-full">
           {urlArrayAndQuery.data.map((item, index) => {
             return (
               <div key={index}>
-                <img className="w-[280px]" src={item.url} alt="image" />
+                <img
+                  className="w-[280px] h-[280px] bg-gray-800 mb-2 sm:mb-0"
+                  src={item.url}
+                  alt="image"
+                />
               </div>
             );
           })}

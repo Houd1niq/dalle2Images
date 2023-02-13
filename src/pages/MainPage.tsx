@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import openAI from "../api/openAI.js";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { addImages } from "../store/slices/imagesSlice";
 import { useNavigate } from "react-router-dom";
+import { CardOfQuery } from "../components/CardOfQuery";
+import { DarkInput } from "../components/DarkInput";
+import { DarkButton } from "../components/DarkButton";
+import { setIsLoading } from "../store/slices/appStateSlice";
 
 interface AxiosError {
   response: {
@@ -17,43 +21,50 @@ interface AxiosError {
 
 export const MainPage = () => {
   const [promptsValue, setPromptsValue] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const queries = useAppSelector((state) => state.images);
+  const isLoading = useAppSelector((state) => state.appState.isLoading);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   async function getTestImage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setIsLoading(true);
-    setIsError(false);
-    try {
-      let response = await openAI.createImage({
-        prompt: promptsValue,
-        n: 4,
-        size: "1024x1024",
-      });
-      setIsLoading(false);
-      if (!isLoading && response.status === 200) {
-        let responseData = response.data as {
-          created: number;
-          data: { url: string }[];
-        };
-        dispatch(addImages({ ...responseData, query: promptsValue }));
-        navigate(`images/${responseData.created}`);
+    if (!isLoading) {
+      dispatch(setIsLoading(true));
+      setIsError(false);
+      try {
+        let response = await openAI.createImage({
+          prompt: promptsValue,
+          n: 4,
+          size: "512x512",
+          response_format: "url",
+        });
+        dispatch(setIsLoading(false));
+        if (response.status === 200) {
+          let responseData = response.data as {
+            created: number;
+            data: { url: string }[];
+          };
+          dispatch(addImages({ ...responseData, query: promptsValue }));
+          navigate(`images/${responseData.created}`);
+        }
+      } catch (e) {
+        console.log(e);
+        setIsError(true);
+        setIsLoading(false);
       }
-    } catch (e) {
-      console.log(e);
-      setIsError(true);
-      setIsLoading(false);
     }
   }
 
   return (
-    <div className="App">
-      <div className="text-2xl ">Генератор изображений</div>
-      <form onSubmit={getTestImage} className="mb-3">
-        <input
-          className="w-[320px] h-8 p-2 border-1 border-gray-300 rounded-md outline-none bg-gray-800"
+    <div className="">
+      <h1 className="text-2xl mb-3">Генератор изображений</h1>
+      <form onSubmit={getTestImage} className="mb-8">
+        <DarkInput
+          className="w-[320px] mb-3 sm:mb-0"
           value={promptsValue}
+          placeholder="Введите запрос"
           onChange={(e) => {
             setPromptsValue(e.target.value);
           }}
@@ -61,27 +72,35 @@ export const MainPage = () => {
           name="prompts"
           id=""
         />
-        <button
-          className="w-22 p-2 ml-3 bg-gray-800 rounded-xl hover:bg-gray-600 transition-colors duration-150"
-          type="submit"
-        >
+        <DarkButton className="ml-3" type="submit">
           Получить изображение
-        </button>
+        </DarkButton>
       </form>
       <div className="flex gap-1">
-        {isLoading && <div className="text-2xl">Loading...</div>}
         {isError && (
           <div className="text-2xl">
             При запросе произошла ошибка. Возможно сервис не работает или вы
             ввели запрещённый запрос.
           </div>
         )}
-        {/*{image.length > 0 &&*/}
-        {/*  image.map((item) => {*/}
-        {/*    return (*/}
-        {/*      <img className="w-[300px]" key={item.url} src={item.url}></img>*/}
-        {/*    );*/}
-        {/*  })}*/}
+      </div>
+      <div>
+        <h2 className="text-2xl mb-5">Предыдущие запросы</h2>
+        <div className="flex flex-wrap justify-center gap-6">
+          {Object.keys(queries).length === 0 && (
+            <div className="text-2xl">Запросов пока нет</div>
+          )}
+          {Object.keys(queries).map((item) => {
+            return (
+              <CardOfQuery
+                key={item}
+                query={queries[item].query}
+                data={queries[item].data}
+                id={item}
+              ></CardOfQuery>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
