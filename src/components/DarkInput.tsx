@@ -8,7 +8,17 @@ export const DarkInput: React.FC<{
   type?: string;
   name?: string;
   id?: string;
-}> = ({ className, value, placeholder, onChange, type, name, id }) => {
+  childRef?: React.Ref<HTMLInputElement>;
+}> = ({
+  className,
+  value,
+  placeholder,
+  onChange,
+  type,
+  name,
+  id,
+  childRef,
+}) => {
   return (
     <input
       className={
@@ -22,6 +32,8 @@ export const DarkInput: React.FC<{
       type={type}
       name={name}
       id={id}
+      ref={childRef}
+      autoComplete="off"
     ></input>
   );
 };

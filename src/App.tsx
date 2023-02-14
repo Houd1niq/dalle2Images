@@ -6,11 +6,13 @@ import { GeneratedImagesPage } from "./pages/GeneratedImagesPage";
 import { useAppDispatch, useAppSelector } from "./store/store";
 import { removeImages } from "./store/slices/imagesSlice";
 import Progress from "./components/Progress";
+import { NotFoundBlock } from "./components/NotFoundBlock";
 
 const browserRouter = createBrowserRouter([
   {
     path: "/",
     element: <MainPage></MainPage>,
+    errorElement: <NotFoundBlock></NotFoundBlock>,
   },
   {
     path: "/images/:id",
