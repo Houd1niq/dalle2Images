@@ -3,8 +3,8 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { MainPage } from "./pages/MainPage";
 import { GeneratedImagesPage } from "./pages/GeneratedImagesPage";
-import { useAppDispatch, useAppSelector } from "./store/store";
-import { removeImages } from "./store/slices/imagesSlice";
+import { AppDispatch, useAppDispatch, useAppSelector } from "./store/store";
+import { ImagesState, removeImages } from "./store/slices/imagesSlice";
 import Progress from "./components/Progress";
 import { NotFoundBlock } from "./components/NotFoundBlock";
 
@@ -20,18 +20,23 @@ const browserRouter = createBrowserRouter([
   },
 ]);
 
+function deleteOldImages(imagesState: ImagesState, dispatch: AppDispatch) {
+  Object.keys(imagesState).forEach((key) => {
+    if (imagesState[key].expires < Date.now()) {
+      dispatch(removeImages(key));
+    }
+  });
+}
+
 function App() {
   const imagesState = useAppSelector((state) => state.images);
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.appState.isLoading);
 
   useEffect(() => {
+    deleteOldImages(imagesState, dispatch);
     let interval = setInterval(() => {
-      Object.keys(imagesState).forEach((key) => {
-        if (imagesState[key].expires < Date.now()) {
-          dispatch(removeImages(key));
-        }
-      });
+      deleteOldImages(imagesState, dispatch);
     }, 5000);
     return () => {
       clearInterval(interval);

@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-type DataAboutImage = {
+export type DataAboutImage = {
   data: {
     url: string;
   }[];
@@ -13,7 +13,7 @@ type DataAboutImage = {
   expires: number;
 };
 
-type ImagesState = {
+export type ImagesState = {
   [key: string]: DataAboutImage;
 };
 

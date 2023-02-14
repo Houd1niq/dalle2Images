@@ -19,7 +19,7 @@ export const CardOfQuery: React.FC<{
         {data.map((item) => {
           return (
             <img
-              className="w-[160px]"
+              className="w-[160px] h-[160px]"
               key={item.url}
               src={item.url}
               alt="generated image"

@@ -92,7 +92,7 @@ export const MainPage = () => {
         <h2 className="text-2xl mb-5 font-bold">Предыдущие запросы</h2>
         <div className="flex flex-wrap justify-center gap-6">
           {Object.keys(queries).length === 0 && (
-            <div className="text-2xl">Запросов пока нет</div>
+            <div className="text-2xl">Запросов пока нет :(</div>
           )}
           {Object.keys(queries)
             .reverse()

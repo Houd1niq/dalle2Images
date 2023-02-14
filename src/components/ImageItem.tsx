@@ -9,7 +9,7 @@ export const ImageItem: React.FC<{
   return (
     <div className="group relative transition-all duration-300 hover:scale-[1.02]">
       <img
-        className="w-[280px] h-[280px] bg-gray-800 mb-2 sm:mb-0 group-hover:opacity-75 transition-all duration-300"
+        className="w-[280px] h-[280px] bg-gray-800 mb-2 lg:mb-0 group-hover:opacity-75 transition-all duration-300"
         src={item.url}
         alt="image"
       />
@@ -26,7 +26,7 @@ export const ImageItem: React.FC<{
         />
       </a>
       {/* link for mobile version*/}
-      <DarkButton className="block sm:hidden">
+      <DarkButton className="block lg:hidden">
         <a download={"image-" + index} href={item.url}>
           Скачать
         </a>

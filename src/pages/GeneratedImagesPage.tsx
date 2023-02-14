@@ -3,6 +3,7 @@ import { useAppSelector } from "../store/store";
 import { DarkButton } from "../components/DarkButton";
 import { ImageItem } from "../components/ImageItem";
 import { NotFoundBlock } from "../components/NotFoundBlock";
+import { Timer } from "../components/Timer";
 
 export const GeneratedImagesPage = () => {
   const location = useLocation();
@@ -18,6 +19,14 @@ export const GeneratedImagesPage = () => {
         {urlArrayAndQuery.query[0].toUpperCase() +
           urlArrayAndQuery.query.slice(1)}
       </h2>
+
+      <div className="info mb-3">
+        <p className="text-lg">
+          Ссылка на эту генерацию изображений действительна 1 час.
+        </p>
+        <Timer urlArrayAndQuery={urlArrayAndQuery}></Timer>
+      </div>
+
       <div className="flex flex-wrap gap-2 max-w-[800px] justify-center xl:max-w-full">
         {urlArrayAndQuery.data.map((item, index) => {
           return <ImageItem item={item} index={index} key={index}></ImageItem>;
