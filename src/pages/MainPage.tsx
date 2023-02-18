@@ -7,6 +7,7 @@ import { CardOfQuery } from "../components/CardOfQuery";
 import { DarkInput } from "../components/DarkInput";
 import { DarkButton } from "../components/DarkButton";
 import { setIsLoading } from "../store/slices/appStateSlice";
+import { FancyHeader } from "../components/FancyHeader";
 
 interface AxiosError {
   response: {
@@ -63,7 +64,7 @@ export const MainPage = () => {
 
   return (
     <div className="">
-      <h1 className="text-2xl mb-3 font-bold">Генератор изображений</h1>
+      <FancyHeader value={"Генератор изображений"}></FancyHeader>
       <form onSubmit={getTestImage} className="mb-6">
         <DarkInput
           childRef={inputRef}

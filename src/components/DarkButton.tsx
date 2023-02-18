@@ -9,7 +9,8 @@ export const DarkButton: React.FC<{
     isLink: boolean;
     to: To;
   };
-}> = ({ children, className, type, link }) => {
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}> = ({ children, className, type, link, onClick }) => {
   if (link?.isLink) {
     return (
       <Link
@@ -33,6 +34,7 @@ export const DarkButton: React.FC<{
         className
       }
       type={type}
+      onClick={onClick}
     >
       {children}
     </button>
