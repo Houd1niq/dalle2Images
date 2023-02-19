@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const CardOfQuery: React.FC<{
+export const MobileCardOfQuery: React.FC<{
   query: string;
   data: { url: string }[];
   id: string;

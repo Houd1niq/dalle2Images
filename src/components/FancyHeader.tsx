@@ -5,7 +5,6 @@ export const FancyHeader: React.FC<{ value: string }> = ({ value }) => {
   // Function that will emulate generation effect of title
   const generateTitle = (value: string) => {
     const alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-    // setTitle("");
     let iteration = 0;
 
     let interval = setInterval(() => {
@@ -19,7 +18,6 @@ export const FancyHeader: React.FC<{ value: string }> = ({ value }) => {
           tempTitle += value[i];
         }
       }
-      console.log(iteration, tempTitle);
       iteration++;
       setTitle(tempTitle);
       if (iteration === value.length) {
