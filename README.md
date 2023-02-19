@@ -1,2 +1,2 @@
 # dalle2Images
-Project link - https://dalle2-images.vercel.app
+Project link - https://dalle2images.netlify.app
