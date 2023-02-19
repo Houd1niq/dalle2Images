@@ -32,3 +32,31 @@
     animation: logo-spin infinite 20s linear;
   }
 }
+
+.images {
+  transition: all 0.5s;
+}
+
+.images:hover {
+  transform: rotate3d(0, 1, 0, 0deg);
+  width: 340px;
+}
+.images:first-child:hover {
+  transform: perspective(1000px) rotate3d(0, 1, 0, 15deg) scale(1.07);
+}
+.images:last-child:hover {
+  transform: perspective(1000px) rotate3d(0, 1, 0, -15deg) scale(1.07);
+}
+
+.images:first-child {
+  transform: perspective(1000px) rotate3d(0, 1, 0, 35deg) scale(1.07);
+}
+.images:nth-child(2) {
+  transform: perspective(1000px) rotate3d(0, 1, 0, 15deg);
+}
+.images:nth-child(3) {
+  transform: perspective(1000px) rotate3d(0, 1, 0, -15deg);
+}
+.images:last-child {
+  transform: perspective(1000px) rotateY(-35deg) scale(1.07);
+}

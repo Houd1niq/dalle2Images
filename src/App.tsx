@@ -7,6 +7,7 @@ import { AppDispatch, useAppDispatch, useAppSelector } from "./store/store";
 import { ImagesState, removeImages } from "./store/slices/imagesSlice";
 import Progress from "./components/Progress";
 import { NotFoundBlock } from "./components/NotFoundBlock";
+import { Analytics } from "@vercel/analytics/react";
 
 const browserRouter = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ function App() {
 
   return (
     <>
+      <Analytics></Analytics>
       <Progress isAnimating={isLoading}></Progress>
       <RouterProvider router={browserRouter}></RouterProvider>
     </>

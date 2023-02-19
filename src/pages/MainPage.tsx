@@ -1,13 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import openAI from "../api/openAI.js";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { addImages } from "../store/slices/imagesSlice";
 import { useNavigate } from "react-router-dom";
-import { CardOfQuery } from "../components/CardOfQuery";
+import { MobileCardOfQuery } from "../components/MobileCardOfQuery";
 import { DarkInput } from "../components/DarkInput";
 import { DarkButton } from "../components/DarkButton";
 import { setIsLoading } from "../store/slices/appStateSlice";
 import { FancyHeader } from "../components/FancyHeader";
+import { DesktopCardOfQuery } from "../components/DesktopCardOfQuery";
 
 interface AxiosError {
   response: {
@@ -28,8 +29,24 @@ export const MainPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [width, setWidth] = useState<"mobile" | "desktop">("desktop");
 
-  async function getTestImage(e: React.FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768 && width === "desktop") setWidth("mobile");
+      if (window.innerWidth > 768 && width === "mobile") {
+        setWidth("desktop");
+        console.log("here");
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [width]);
+
+  async function getImage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (promptsValue.trim() === "") {
       if (inputRef.current) inputRef.current.classList.add("border-red-500");
@@ -65,7 +82,7 @@ export const MainPage = () => {
   return (
     <div className="">
       <FancyHeader value={"Генератор изображений"}></FancyHeader>
-      <form onSubmit={getTestImage} className="mb-6">
+      <form onSubmit={getImage} className="mb-6">
         <DarkInput
           childRef={inputRef}
           className="w-[320px] mb-3 sm:mb-0"
@@ -91,21 +108,31 @@ export const MainPage = () => {
       )}
       <div>
         <h2 className="text-2xl mb-5 font-bold">Предыдущие запросы</h2>
-        <div className="flex flex-wrap justify-center gap-6">
+        <div className="flex flex-wrap md:flex-col justify-center md:items-center gap-6">
           {Object.keys(queries).length === 0 && (
             <div className="text-2xl">Запросов пока нет :(</div>
           )}
           {Object.keys(queries)
             .reverse()
             .map((item) => {
-              return (
-                <CardOfQuery
-                  key={item}
-                  query={queries[item].query}
-                  data={queries[item].data}
-                  id={item}
-                ></CardOfQuery>
-              );
+              if (width === "mobile")
+                return (
+                  <MobileCardOfQuery
+                    key={item}
+                    query={queries[item].query}
+                    data={queries[item].data}
+                    id={item}
+                  ></MobileCardOfQuery>
+                );
+              else
+                return (
+                  <DesktopCardOfQuery
+                    key={item}
+                    query={queries[item].query}
+                    data={queries[item].data}
+                    id={item}
+                  ></DesktopCardOfQuery>
+                );
             })}
         </div>
       </div>
