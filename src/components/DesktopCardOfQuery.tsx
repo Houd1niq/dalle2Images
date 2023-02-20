@@ -8,7 +8,7 @@ export const DesktopCardOfQuery: React.FC<{
 }> = ({ query, data, id }) => {
   const upperCaseQuery = query[0].toUpperCase() + query.slice(1);
   return (
-    <Link to={`images/${id}`} className="mt-5">
+    <Link to={`images/${id}`} className="mt-5 flex flex-col items-center">
       <div className="flex gap-2">
         {data.map((item) => {
           return (
@@ -23,7 +23,7 @@ export const DesktopCardOfQuery: React.FC<{
           );
         })}
       </div>
-      <h3 className="mt-10 text-3xl hover:scale-110 transition-all">
+      <h3 className="mt-10 text-3xl hover:scale-105 transition-all">
         {upperCaseQuery}
       </h3>
     </Link>
